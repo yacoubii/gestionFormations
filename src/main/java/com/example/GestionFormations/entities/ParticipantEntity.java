@@ -40,13 +40,11 @@ public class ParticipantEntity {
     @Size(min = 2, max = 20, message = "Lastname between 2 and 20 characters")
     private String lastName;
 
-    @NotBlank
-    @NotNull(message = "Email cannot be null")
+    @NotBlank(message = "Email cannot be null")
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank
-    @NotNull(message = "Phone number cannot be null")
+    @NotBlank(message = "Phone number cannot be null")
     @Size(min = 8, max = 15, message = "Email between 8 and 15 characters")
     private String tel;
 
