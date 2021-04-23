@@ -1,6 +1,7 @@
 package com.example.GestionFormations.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -41,7 +42,7 @@ public class FormationEntity {
     @JoinTable(name = "formation_session",joinColumns = {
             @JoinColumn(name = "formation_id") }, inverseJoinColumns = {
             @JoinColumn(name = "session_id") })
-    //@JsonIgnore
+    @JsonIgnore
     private Set<SessionEntity> sessions;
 
     @ManyToOne
