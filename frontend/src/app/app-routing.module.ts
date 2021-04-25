@@ -9,6 +9,9 @@ import { CountryComponent } from './Components/country/country.component';
 import { DomainComponent } from './Components/domain/domain.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { RoleComponent } from './Components/role/role.component';
+import { FormationComponent } from './Components/formation/formation.component';
+import { FormateurComponent } from './Components/formateur/formateur.component';
+import { OrganismeComponent } from './Components/organisme/organisme.service';
 
 const routes: Routes = [
   { path: 'sessions', component: SessionComponent },
@@ -21,6 +24,9 @@ const routes: Routes = [
   { path: 'domain', component: DomainComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'role', component: RoleComponent },
+  { path: 'formation', component: FormationComponent },
+  { path: 'formateur', component: FormateurComponent },
+  { path: 'organisme', component: OrganismeComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 

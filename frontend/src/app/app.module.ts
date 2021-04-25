@@ -16,6 +16,10 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { RoleComponent } from './Components/role/role.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { SidebarComponent } from './Components/sidebar/sidebar.component';
+import { FormateurComponent } from './Components/formateur/formateur.component';
+import { FormationComponent } from './Components/formation/formation.component';
+import { OrganismeComponent } from './Components/organisme/organisme.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { FormsModule } from '@angular/forms';
     ProfileComponent,
     RoleComponent,
     SessionComponent,
+    SidebarComponent,
+    FormateurComponent,
+    FormationComponent,
+    OrganismeComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [authInterceptorProviders, ParticipantService],

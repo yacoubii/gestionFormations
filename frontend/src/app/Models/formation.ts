@@ -1,10 +1,10 @@
 export interface Formation {
-  id : number
+  id?: number
   titre :string
   type : string
   duree : number
   budget : number
-  nbSession : number
+  nb_session : number
   session : any
-  domaine : any
+  domain : any
 }

@@ -22,9 +22,26 @@ export class OrganismeService {
   }
 
   public linkToFormateur(formateurId:number, organismeId:number) : Observable<any> {
-    return this.http.get<void>(`${this.apiServerUrl}/organisme/link1/${formateurId}/${organismeId}`,
-
-      )
+    return this.http.get<void>(`${this.apiServerUrl}/organisme/link1/${formateurId}/${organismeId}`,)
   }
 
+  public getOrganisme(): Observable<Organisme[]> {
+    return this.http.get<Organisme[]>(`${this.apiServerUrl}/organisme`);
+  }
+
+  public addOrganisme(Organisme: Organisme): Observable<Organisme> {
+    return this.http.post<Organisme>(`${this.apiServerUrl}/organisme`, Organisme);
+  }
+
+  public updateOrganisme(Organisme: Organisme,OrganismeId: number): Observable<void>{
+    return this.http.put<void>(`${this.apiServerUrl}/organisme/${OrganismeId}`, Organisme);
+  }
+
+  public deleteOrganisme(OrganismeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/organisme/${OrganismeId}`);
+  }
+
+  public linkOrganismeToFormateur(formateurId:number, organismeId:number) : Observable<any> {
+    return this.http.get<void>(`${this.apiServerUrl}/organisme/link1/${formateurId}/${organismeId}`)
+  }
 }

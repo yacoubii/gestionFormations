@@ -1,0 +1,122 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+  rel="stylesheet"
+/>
+<body class="hero-anime">	
+
+	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="navbar navbar-expand-md navbar-light">
+					
+					<a class="navbar-brand" href ="#" target="_blank"><img src="/assets/excellent.png" alt="logo"style="width: 195px;height:70px ;"></a>	
+						
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+						
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ml-auto py-4 py-md-0">
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" (click)="clickFun($event)">
+									<a class="nav-link" [routerLink]="['/formateur']">Trainers</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" (click)="clickFun($event)">
+									<a class="nav-link" [routerLink]="['/formation']">Training</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" (click)="clickFun($event)">
+									<a class="nav-link" [routerLink]="['/sessions']">Sessions</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" (click)="clickFun($event)">
+									<a class="nav-link" [routerLink]="['/formation']">Participant</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" (click)="clickFun($event)">
+									<a class="nav-link" [routerLink]="['/organisme']">Organization</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4" (click)="clickFun($event)">
+									<a class="nav-link" [routerLink]="['/domain']">Domain</a>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+									<a class="nav-link dropdown-toggle" data-toggle="dropdown"role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
+									<div class="dropdown-menu"  >
+										<a class="dropdown-item" [routerLink]="['/profile']">Profile</a>
+										<a class="dropdown-item" href="#">Log out</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+						
+					</nav>		
+				</div>
+			</div>
+		</div>
+	</div>
+
+  
+
+</body>
+<script>
+    
+
+/* Please ❤ this if you like it! */
+
+
+(function($) { "use strict";
+
+$(function() {
+    var header = $(".start-style");
+    $(window).scroll(function() {    
+        var scroll = $(window).scrollTop();
+    
+        if (scroll >= 10) {
+            header.removeClass('start-style').addClass("scroll-on");
+        } else {
+            header.removeClass("scroll-on").addClass('start-style');
+        }
+    });
+});		
+    
+//Animation
+
+$(document).ready(function() {
+    $('body.hero-anime').removeClass('hero-anime');
+});
+
+//Menu On Hover
+    
+$('body').on('mouseenter mouseleave','.nav-item',function(e){
+        if ($(window).width() > 750) {
+            var _d=$(e.target).closest('.nav-item');_d.addClass('show');
+            setTimeout(function(){
+            _d[_d.is(':hover')?'addClass':'removeClass']('show');
+            },1);
+        }
+});	
+
+//Switch light/dark
+
+$("#switch").on('click', function () {
+    if ($("body").hasClass("dark")) {
+        $("body").removeClass("dark");
+        $("#switch").removeClass("switched");
+    }
+    else {
+        $("body").addClass("dark");
+        $("#switch").addClass("switched");
+    }
+});  
+
+})(jQuery); 
+</script>

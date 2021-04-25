@@ -9,6 +9,7 @@ import { Domain } from '../Models/domain';
   providedIn: 'root',
 })
 export class DomainService {
+ 
   private apiServerUrl = environment.apiBaseUrl;
 
   constructor(
@@ -41,13 +42,7 @@ export class DomainService {
     });
   }
 
-  public linkFormationToDomain(
-    formationId: number,
-    domainId: number
-  ): Observable<void> {
-    return this.http.delete<void>(
-      `${this.apiServerUrl}/domain/link/${formationId}/${domainId}`,
-      { headers: { Authorization: `Bearer ${this.tokenStorage.getToken()}` } }
-    );
+  public linkDomainToFormation(formationId:number, domainId:number) : Observable<any> {
+    return this.http.get<void>(`${this.apiServerUrl}/domain/link/${formationId}/${domainId}`)
   }
 }

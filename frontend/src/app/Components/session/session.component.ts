@@ -41,10 +41,6 @@ export class SessionComponent implements OnInit {
     this.getFormations()
     this.getOrganismes()
     this.getFormateurs()
-
-
-
-
   }
 
   public getSessions(): void{
