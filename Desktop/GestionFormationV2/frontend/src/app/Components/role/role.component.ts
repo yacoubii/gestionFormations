@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../Sevices/token-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-role',
@@ -19,7 +20,8 @@ export class RoleComponent implements OnInit {
   constructor(
     private roleService: RoleService,
     private router: Router,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -47,11 +49,12 @@ export class RoleComponent implements OnInit {
     this.roleService.addRole(addForm.value).subscribe(
       (response: Role) => {
         console.log(response);
+        this.toastr.success("Role ajouté avec succès!","Félicitations")
         this.getRoles();
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         addForm.reset();
       }
     );
@@ -61,10 +64,11 @@ export class RoleComponent implements OnInit {
     this.roleService.updateRole(roleId, role).subscribe(
       (response: Role) => {
         console.log(response);
+        this.toastr.success("Role modifié avec succès!","Félicitations")
         this.getRoles();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     );
   }
@@ -73,10 +77,11 @@ export class RoleComponent implements OnInit {
     this.roleService.deleteRole(roleId).subscribe(
       (response: void) => {
         console.log(response);
+        this.toastr.success("Role supprimé avec succès!","Félicitations")
         this.getRoles();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     );
   }

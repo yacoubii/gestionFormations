@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../Sevices/token-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-domain',
@@ -19,7 +20,8 @@ export class DomainComponent implements OnInit {
   constructor(
     private domainService: DomainService,
     private router: Router,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +33,11 @@ export class DomainComponent implements OnInit {
       });
     }
   }
+
+  public delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   public getDomains(): void {
     this.domainService.getDomains().subscribe(
       (Response: Domain[]) => {
@@ -45,13 +52,16 @@ export class DomainComponent implements OnInit {
   public onAddDomain(addForm: NgForm): void {
     document.getElementById('add-domain-form')?.click();
     this.domainService.addDomain(addForm.value).subscribe(
-      (response: Domain) => {
+      async (response: Domain) => {
         console.log(response);
+        this.toastr.success("Domaine ajouté avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
         this.getDomains();
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         alert(error.message);
         addForm.reset();
       }
@@ -62,6 +72,7 @@ export class DomainComponent implements OnInit {
     this.domainService.updateDomain(domainId, domain).subscribe(
       (response: Domain) => {
         console.log(response);
+        this.toastr.success("Domaine modifié avec succès!","Félicitations")
         this.getDomains();
       },
       (error: HttpErrorResponse) => {
@@ -72,8 +83,10 @@ export class DomainComponent implements OnInit {
 
   public onDeleteDomain(domainId: number): void {
     this.domainService.deleteDomain(domainId).subscribe(
-      (response: void) => {
+      async (response: void) => {
         console.log(response);
+        this.toastr.success("Domaine supprimé avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
         this.getDomains();
       },

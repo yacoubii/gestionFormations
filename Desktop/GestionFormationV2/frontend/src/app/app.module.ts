@@ -40,7 +40,7 @@ import { OrganismeComponent } from './Components/organisme/organisme.service';
     OrganismeComponent,
   ],
   imports: [BrowserModule, BrowserAnimationsModule, ToastrModule.forRoot({
-    timeOut:2500,
+    timeOut:1500,
     progressBar:true,
     progressAnimation:'increasing',
     preventDuplicates:true,

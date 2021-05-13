@@ -5,6 +5,7 @@ import {Formateur} from 'src/app/Models/formateur';
 import {Organisme} from 'src/app/Models/organisme';
 import {FormateurService} from 'src/app/Sevices/formateur.service';
 import {OrganismeService} from 'src/app/Sevices/organisme.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formateur',
@@ -25,7 +26,9 @@ export class FormateurComponent implements OnInit {
   public formateurId: any;
   public myObject!: Formateur;
 
-  constructor(private formateurService: FormateurService, private organismeService: OrganismeService) {
+  constructor(private formateurService: FormateurService, 
+    private organismeService: OrganismeService,
+    private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -88,9 +91,11 @@ export class FormateurComponent implements OnInit {
             console.log(error.message)
           }
         )
-        await this.delay(1000)
+        this.toastr.success("Formateur ajouté avec succès!","Félicitations")
+        await this.delay(1510);
         this.getFormateurs()
       }, (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         console.log(error.message)
       }
     )
@@ -117,12 +122,14 @@ export class FormateurComponent implements OnInit {
 
   public onDeleteFormateur(formateurId: number): void {
     this.formateurService.deleteFormateurEntity(formateurId).subscribe(
-      (response: void) => {
+      async (response: void) => {
         console.log(response);
+        this.toastr.success("Formateur supprimé avec succès!","Félicitations")
+        await this.delay(1510);
         this.getFormateurs();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     );
   }
@@ -152,9 +159,11 @@ export class FormateurComponent implements OnInit {
             }
           )
         }
-        this.delay(1000)
+        this.toastr.success("Formateur modifié avec succès!","Félicitations")
+        await this.delay(1510);
         this.getFormateurs()
       }, (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     )
   }

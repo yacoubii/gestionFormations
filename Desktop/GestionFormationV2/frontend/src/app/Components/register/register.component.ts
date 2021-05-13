@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../Sevices/auth.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
   data: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private toastr: ToastrService) {}
 
   ngOnInit() {}
 
@@ -34,12 +35,15 @@ export class RegisterComponent implements OnInit {
             this.delay(1000);
           },
           (err) => {
+            this.toastr.error(err.message,"Une erreur s'est produite :(");
             this.errorMessage = err.error.message;
             this.isSignUpFailed = true;
           }
         );
+        this.toastr.success("Inscription effectuée avec succès!","Félicitations")
       },
       (err) => {
+        this.toastr.error(err.message,"Une erreur s'est produite :(");
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }

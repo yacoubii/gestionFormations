@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../Sevices/auth.service';
 import { TokenStorageService } from '../../Sevices/token-storage.service';
 
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class LoginComponent implements OnInit {
         //this.reloadPage();
       },
       (err) => {
+        this.toastr.error(err.message,"Nom d'utilisateur ou mot passe incorrecte :(");
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
       }

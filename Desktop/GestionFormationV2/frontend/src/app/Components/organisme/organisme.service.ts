@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Organisme} from 'src/app/Models/organisme';
 import { OrganismeService } from 'src/app/Sevices/organisme.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-organisme',
   templateUrl: './organisme.component.html',
@@ -17,7 +18,8 @@ export class OrganismeComponent implements OnInit {
   public deleteOrganisme!: Organisme; 
 
 
-  constructor(private organismeService:OrganismeService) { }
+  constructor(private organismeService:OrganismeService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getOrganismes();
@@ -41,11 +43,12 @@ public getOrganismes(): void {
       this.organismeService.addOrganisme(addForm.value).subscribe(
         (response: Organisme) => {
           console.log(response);
+          this.toastr.success("Organisme ajouté avec succès!","Félicitations")
           this.getOrganismes();
           addForm.reset();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error(error.message,"Une erreur s'est produite :(");
           addForm.reset();
         }
       );
@@ -55,10 +58,11 @@ public getOrganismes(): void {
       this.organismeService.deleteOrganisme(organismeId).subscribe(
         (response: void) => {
           console.log(response);
+          this.toastr.success("Organisme supprimé avec succès!","Félicitations")
           this.getOrganismes();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error(error.message,"Une erreur s'est produite :(");
         }
       );
     }
@@ -67,10 +71,11 @@ public getOrganismes(): void {
       this.organismeService.updateOrganisme(organisme,organisme.id).subscribe(
         (response: any) => {
           console.log(response);
+          this.toastr.success("Organisme modifiée avec succès!","Félicitations")
           this.getOrganismes();
         },
         (error: HttpErrorResponse) => {
-          alert(error.message);
+          this.toastr.error(error.message,"Une erreur s'est produite :(");
         }
       );
     }

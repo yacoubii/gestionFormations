@@ -5,6 +5,7 @@ import { Formation } from 'src/app/Models/formation';
 import { FormationService } from 'src/app/Sevices/formation.service';
 import { DomainService } from 'src/app/Sevices/domain.service';
 import { Domain } from 'src/app/Models/domain';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-formation',
   templateUrl: './formation.component.html',
@@ -25,7 +26,9 @@ export class FormationComponent implements OnInit {
   public myObject!: Formation;
 
 
-  constructor(private formationService:FormationService, private domainService:DomainService) { }
+  constructor(private formationService:FormationService, 
+    private domainService:DomainService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getFormations();
@@ -103,9 +106,11 @@ public getFormations(): void {
               console.log(error.message)
             }
           )
-          await this.delay(1000)
+          this.toastr.success("Formation ajoutée avec succès!","Félicitations")
+          await this.delay(1510);
           this.getFormations()
         },(error:HttpErrorResponse)=>{
+          this.toastr.error(error.message,"Une erreur s'est produite :(");
           console.log(error.message)
         }
       )
@@ -113,11 +118,14 @@ public getFormations(): void {
 
     public onDeleteFormation(formationId: number): void {
       this.formationService.deleteFormationEntity(formationId).subscribe(
-        (response: void) => {
+        async (response: void) => {
           console.log(response);
+          this.toastr.success("Formation supprimée avec succès!","Félicitations")
+          await this.delay(1510);
           this.getFormations();
         },
         (error: HttpErrorResponse) => {
+          this.toastr.error(error.message,"Une erreur s'est produite :(");
           alert(error.message);
         }
       );
@@ -150,9 +158,11 @@ public getFormations(): void {
               }
             )
           }
-          this.delay(1000)
+          this.toastr.success("Formation modifiée avec succès!","Félicitations")
+          await this.delay(1510);
           this.getFormations()
       },(error:HttpErrorResponse)=>{
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     )
     }

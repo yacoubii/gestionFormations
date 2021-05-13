@@ -59,13 +59,13 @@ export class CountryComponent implements OnInit {
       async (response: Country) => {
         console.log(response);
         this.toastr.success("Pays ajouté avec succès!","Félicitations")
-        await this.delay(2510);
+        await this.delay(1510);
         window.location.reload();
         this.getCountries();
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        this.toastr.error(error.message,"Une erreur c'est produite :(");
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         addForm.reset();
       }
     );
@@ -74,12 +74,15 @@ export class CountryComponent implements OnInit {
   public onUpdateCountry(countryId: any, country: Country): void {
     country.flag=this.base64textString;
     this.countryService.updateCountry(countryId, country).subscribe(
-      (response: Country) => {
+      async (response: Country) => {
         console.log(response);
+        this.toastr.success("Pays modifié avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
         this.getCountries();
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         alert(error.message);
       }
     );
@@ -87,12 +90,15 @@ export class CountryComponent implements OnInit {
 
   public onDeleteCountry(countryId: number): void {
     this.countryService.deleteCountry(countryId).subscribe(
-      (response: void) => {
+      async (response: void) => {
         console.log(response);
+        this.toastr.success("Pays supprimé avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
         this.getCountries();
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         alert(error.message);
       }
     );

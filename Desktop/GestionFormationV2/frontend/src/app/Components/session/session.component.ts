@@ -9,6 +9,7 @@ import {Formation} from "../../Models/formation";
 import {Formateur} from "../../Models/formateur";
 import {FormationService} from "../../Sevices/formation.service";
 import {FormateurService} from "../../Sevices/formateur.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-session',
@@ -35,7 +36,8 @@ export class SessionComponent implements OnInit {
   constructor(private sessionService:SessionService,
               private organismeService:OrganismeService,
               private formationService:FormationService,
-              private formateurService:FormateurService
+              private formateurService:FormateurService,
+              private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -139,10 +141,12 @@ export class SessionComponent implements OnInit {
             console.log((error.message))
           }
         )
-        await this.delay(1000)
+        this.toastr.success("Session ajoutée avec succès!","Félicitations")
+        await this.delay(1510);
         this.getSessions()
 
       },(error:HttpErrorResponse)=>{
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         console.log(error.message)
       }
     )
@@ -195,9 +199,11 @@ export class SessionComponent implements OnInit {
             }
           )
         }
-        await this.delay(1000)
+        this.toastr.success("Session modifée avec succès!","Félicitations")
+        await this.delay(1510);
       this.getSessions()
       },(error:HttpErrorResponse)=>{
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     )
   }
@@ -205,9 +211,11 @@ export class SessionComponent implements OnInit {
   public onDeleteSession(sessionId:number):void{
     this.sessionService.deleteSession(sessionId).subscribe(
       (response:any)=>{
+        this.toastr.success("Session supprimée avec succès!","Félicitations")
         this.getSessions()
       }, (error:HttpErrorResponse)=>{
         console.log(error.message)
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     )
   }

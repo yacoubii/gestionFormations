@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../Sevices/user.service';
 import { User } from '../../Models/user';
 import { RoleService } from '../../Sevices/role.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +23,8 @@ export class UsersComponent implements OnInit {
     private roleService: RoleService,
     private router: Router,
     private userService: UserService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -65,12 +67,15 @@ export class UsersComponent implements OnInit {
 
   public OnDeleteUser(userId: number): void {
     this.userService.deleteUser(userId).subscribe(
-      (response: any) => {
+      async (response: any) => {
         console.log(response);
         //this.delay(1000);
+        this.toastr.success("Utilisateur supprimé avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         console.error(error.message);
       }
     );
@@ -93,19 +98,21 @@ export class UsersComponent implements OnInit {
             .subscribe((response: any) => {
               console.log(response);
               this.delay(1000);
-              userEdit.roles.forEach((roleId: any) => {
+              userEdit.roles.forEach(async (roleId: any) => {
                 this.userService
                   .linkUserToRole(userEdit.code, roleId)
                   .subscribe((response: any) => {
                     console.log(response);
                   });
-                this.delay(500);
+                  this.toastr.success("Utilisateur modifié avec succès!","Félicitations")
+                  await this.delay(1510);
                 window.location.reload();
               });
             });
         }
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         console.error(error.message);
       }
     );

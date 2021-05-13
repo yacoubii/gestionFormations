@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TokenStorageService } from '../../Sevices/token-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +20,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private router: Router,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +33,11 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+
+  public delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  
   public getProfiles(): void {
     this.profileService.getProfiles().subscribe(
       (Response: Profile[]) => {
@@ -45,14 +52,16 @@ export class ProfileComponent implements OnInit {
   public onAddProfile(addForm: NgForm): void {
     document.getElementById('add-profile-form')?.click();
     this.profileService.addProfile(addForm.value).subscribe(
-      (response: Profile) => {
+      async (response: Profile) => {
         console.log(response);
+        this.toastr.success("Profil ajouté avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
         this.getProfiles();
         addForm.reset();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         addForm.reset();
       }
     );
@@ -62,23 +71,26 @@ export class ProfileComponent implements OnInit {
     this.profileService.updateProfile(profileId, profile).subscribe(
       (response: Profile) => {
         console.log(response);
+        this.toastr.success("Profil modifié avec succès!","Félicitations")
         this.getProfiles();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     );
   }
 
   public onDeleteProfile(profileId: number): void {
     this.profileService.deleteProfile(profileId).subscribe(
-      (response: void) => {
+      async (response: void) => {
         console.log(response);
+        this.toastr.success("Profil supprimé avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
         this.getProfiles();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
       }
     );
   }
