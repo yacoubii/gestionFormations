@@ -11,6 +11,7 @@ import { Country } from '../../Models/country';
 import { NgForm } from '@angular/forms';
 import { TokenStorageService } from '../../Sevices/token-storage.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-participant',
@@ -32,7 +33,8 @@ export class ParticipantComponent implements OnInit {
     private sessionService: SessionService,
     private profileService: ProfileService,
     private countryService: CountryService,
-    private tokenStorageService: TokenStorageService
+    private tokenStorageService: TokenStorageService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -142,7 +144,7 @@ export class ParticipantComponent implements OnInit {
           });
         this.countryService
           .linkCountryToParticipant(participantId, addForm.value.country[0])
-          .subscribe((response: any) => {
+          .subscribe(async (response: any) => {
             console.log('pays:');
             console.log(response);
             // this.getParticipants();
@@ -150,10 +152,13 @@ export class ParticipantComponent implements OnInit {
             // this.getSessions();
             // this.getCountries();
             // addForm.reset();
+            this.toastr.success("Participant ajouté avec succès!","Félicitations")
+            await this.delay(1510);
             window.location.reload();
           });
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         console.error(error.message);
       }
     );
@@ -161,15 +166,18 @@ export class ParticipantComponent implements OnInit {
 
   public OnDeleteParticipant(participantId: number): void {
     this.participantService.deleteParticipant(participantId).subscribe(
-      (response: any) => {
+      async (response: any) => {
         console.log(response);
         // this.getParticipants();
         // this.getProfiles();
         // this.getSessions();
         // this.getCountries();
+        this.toastr.success("Participant supprimé avec succès!","Félicitations")
+        await this.delay(1510);
         window.location.reload();
       },
       (error: HttpErrorResponse) => {
+        this.toastr.error(error.message,"Une erreur s'est produite :(");
         console.error(error.message);
       }
     );
@@ -188,7 +196,7 @@ export class ParticipantComponent implements OnInit {
     this.participantService
       .updateParticipant(edition, participantEdit.id)
       .subscribe(
-        (response: any) => {
+        async (response: any) => {
           if (participantEdit.sessions) {
             this.participantService
               .clearSessionsForParticipant(participantEdit.id)
@@ -253,9 +261,12 @@ export class ParticipantComponent implements OnInit {
                 // this.getCountries();
               });
           }
+          this.toastr.success("Participant modifié avec succès!","Félicitations")
+          await this.delay(1510);
           window.location.reload();
         },
         (error: HttpErrorResponse) => {
+          this.toastr.error(error.message,"Une erreur s'est produite :(");
           console.error(error.message);
         }
       );
