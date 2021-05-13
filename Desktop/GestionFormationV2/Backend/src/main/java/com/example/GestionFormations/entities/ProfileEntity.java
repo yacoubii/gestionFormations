@@ -7,7 +7,6 @@ import java.util.Set;
 
 @Entity
 @Table
-//@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class ProfileEntity {
     @Id
     @SequenceGenerator(

@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 
 @Entity
-//@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class RoleEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
