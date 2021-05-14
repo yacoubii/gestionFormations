@@ -49,9 +49,18 @@ public class SessionService {
         if(!sessionId.isPresent()){
             throw new IllegalStateException("session does not exist");
         }
+        sessionId.get().getOrganisme().setSessions(null);
         sessionId.get().setOrganisme(null);
+        sessionId.get().getFormateur().setSessions(null);
         sessionId.get().setFormateur(null);
+        sessionId.get().getFormations().forEach(f ->{
+            f.setSessions(null);
+        });
         sessionId.get().setFormations(null);
+        sessionId.get().getParticipants().forEach(p -> {
+            p.setSessions(null);
+        });
+        sessionId.get().setParticipants(null);
 
         sessionRepository.deleteById(id);
     }
@@ -107,6 +116,9 @@ public class SessionService {
     public void clearFormationsForSessions(Long sessionId){
         SessionEntity session = sessionRepository.findById(sessionId).orElseThrow(()-> new IllegalStateException(
                 "sessions with id " + sessionId + " does not exist"));
+        session.getFormations().forEach(formationEntity -> {
+            formationEntity.setSessions(null);
+        });
         session.setFormations(null);
         sessionRepository.save(session);
     }

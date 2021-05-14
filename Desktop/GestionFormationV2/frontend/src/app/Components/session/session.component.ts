@@ -138,6 +138,7 @@ export class SessionComponent implements OnInit {
         this.formationList.forEach((formationId: any) => {
           this.formationService.linkToSession(this.sessionId,formationId)
             .subscribe(async (response: any) => {
+              this.formationService.linkToSession(this.sessionId, formationId).subscribe();
               console.log('session:******');
               console.log(response);
               await this.delay(500);
@@ -201,17 +202,18 @@ export class SessionComponent implements OnInit {
             console.log(res);
             console.log("cleared");
           });
-          }
+          
           session.formation.forEach((formationId: any) => {
             this.formationService.linkToSession(this.sessionId, formationId)
                 .subscribe(async (response: any) => {
+                  this.formationService.linkToSession(this.sessionId, formationId).subscribe();
                   console.log('session updated*********:');
                   console.log(response);
                   await this.delay(500)
                 },(error:HttpErrorResponse)=>{
                   console.log((error.message))
                 });
-            });
+            });}
         this.toastr.success("Session modifée avec succès!","Félicitations")
         await this.delay(1510);
       this.getSessions()

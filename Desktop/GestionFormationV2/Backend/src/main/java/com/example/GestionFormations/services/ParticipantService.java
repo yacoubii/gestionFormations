@@ -50,6 +50,8 @@ public class ParticipantService {
             throw new IllegalStateException("participant does not exist");
         }
         participantId.get().setProfile(null);
+        participantId.get().setSessions(null);
+        participantId.get().setCountry(null);
         participantRepository.deleteById(id);
     }
 
