@@ -109,7 +109,7 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                    <label for="country">Pays</label>
-                  <select name="country" ngModel id="country" class="selectpicker form-control" multiple data-max-options="1" required>
+                  <select data-live-search="true" name="country" ngModel id="country" class="selectpicker form-control" multiple data-max-options="1" required>
                     <option value={{country?.id}} *ngFor = "let country of countries">{{country?.name}}</option>  
                 </select>
                  </div>
@@ -199,23 +199,23 @@
               <div class="form-group col-md-6">
                 <label for="firstName">Prénom</label>
                 <input type="hidden" ngModel="{{editParticipant?.id}}" name="id" class="form-control" id="id" placeholder="Email">
-                <input  ngModel type="text" class="form-control" id="firstName" name="firstName" placeholder="Prénom" required>
+                <input  ngModel ngModel="{{editParticipant?.firstName}}" type="text" class="form-control" id="firstName" name="firstName" placeholder="Prénom" required>
               </div>
               <div class="form-group col-md-6">
                 <label for="lastName">Nom</label>
-                <input  ngModel type="text" class="form-control" id="lastName" name="lastName" placeholder="Nom"  required>
+                <input  ngModel ngModel="{{editParticipant?.lastName}}" type="text" class="form-control" id="lastName" name="lastName" placeholder="Nom"  required>
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                  <label for="country">Pays</label>
-                <select  name="country" ngModel id="country" class="selectpicker form-control" multiple data-max-options="1" required>
+                <select  name="country" ngModel="{{editParticipant?.country?.name}}" ngModel id="country" class="selectpicker form-control" multiple data-max-options="1" required>
                   <option value={{country?.id}} *ngFor = "let country of countries">{{country?.name}}</option>  
               </select>
                </div>
                <div class="form-group col-md-6">
                  <label  for="tel">Numéro de téléphone</label>
-                 <input  ngModel type="text" class="form-control" id="tel" name="tel" placeholder="Phone number" required>
+                 <input  ngModel ngModel="{{editParticipant?.tel}}" type="text" class="form-control" id="tel" name="tel" placeholder="Phone number" required>
                </div>
            </div>
            
@@ -238,7 +238,7 @@
            <div class="form-row">
               <div class="form-group col-md-6">
                   <label for="lastName">E-mail</label>
-                  <input ngModel type="email" class="form-control" id="email" name="email" placeholder="exemple@exempme.com"  required>
+                  <input ngModel ngModel="{{editParticipant?.email}}" type="email" class="form-control" id="email" name="email" placeholder="exemple@exempme.com"  required>
                </div>
                <div class="form-group col-md-6">
                   <label for="Type">Type  &nbsp;</label>

@@ -207,6 +207,7 @@ export class ParticipantComponent implements OnInit {
               this.participantService
                 .linkNewSessionToParticipant(sessionId, participantEdit.id)
                 .subscribe(async (response: any) => {
+                  this.participantService.linkNewSessionToParticipant(sessionId, participantEdit.id).subscribe()
                   console.log('session:');
                   console.log(response);
                   await this.delay(500);
