@@ -34,7 +34,15 @@ public class FormateurService {
         if(!formateurId.isPresent()){
             throw new IllegalStateException("formateur does not exist");
         }
+
+        formateurId.get().getSessions().forEach(sessionEntity -> {
+            sessionEntity.setFormateur(null);
+        });
+        formateurId.get().setSessions(null);
+
+        formateurId.get().getOrganisme().setFormateurs(null);
         formateurId.get().setOrganisme(null);
+
         formateurRepository.deleteById(id);
     }
 

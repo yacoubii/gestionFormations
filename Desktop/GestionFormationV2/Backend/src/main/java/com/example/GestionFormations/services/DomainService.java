@@ -49,6 +49,11 @@ public class DomainService {
         if(!exists){
             throw new IllegalStateException("Domain with id " + domainId + " does not exists");
         }
+        Optional<DomainEntity> domain = domainRepository.findById(domainId);
+        domain.get().getFormations().forEach(f-> {
+            f.setDomain(null);
+        });
+        domain.get().setFormations(null);
         domainRepository.deleteById(domainId);
     }
 

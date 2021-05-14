@@ -43,6 +43,12 @@ public class FormationService {
         if(!formationId.isPresent()){
             throw new IllegalStateException("formation does not exist");
         }
+        formationId.get().getSessions().forEach(sessionEntity -> {
+            sessionEntity.setFormations(null);
+        });
+        formationId.get().setSessions(null);
+
+        formationId.get().getDomain().setFormations(null);
         formationId.get().setDomain(null);
         formationRepository.deleteById(id);
     }

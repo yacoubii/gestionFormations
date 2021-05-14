@@ -49,6 +49,15 @@ public class OrganismeService
         if(!exists){
             throw new IllegalStateException("Profile with id " + organismeId + " does not exists");
         }
+        Optional<OrganismeEntity> organisme = organismeRepository.findById(organismeId);
+        organisme.get().getFormateurs().forEach(f->{
+            f.setOrganisme(null);
+        });
+        organisme.get().setFormateurs(null);
+        organisme.get().getSessions().forEach(s->{
+            s.setOrganisme(null);
+        });
+        organisme.get().setSessions(null);
         organismeRepository.deleteById(organismeId);
     }
 

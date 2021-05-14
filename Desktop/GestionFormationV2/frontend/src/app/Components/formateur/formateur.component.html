@@ -151,7 +151,7 @@
              </div>
              <div class="form-row">
                <div class="form-group col-md-6">
-                  <label for="tel">uméro téléphone</label>
+                  <label for="tel">Numéro téléphone</label>
                   <input ngModel="{{editFormateur?.tel}}"  type="text" class="form-control" id="tel" name="tel" placeholder="Numéro téléphone" required>
                 </div>
                 <div class="form-group col-md-6">
@@ -166,8 +166,8 @@
                  </div>
                  <div class="form-group col-md-9">
                   <label for="organisme">Organisme</label>
-                  <select name="organismes" id="organismes" class="selectpicker form-control" data-live-search="true">
-                    <option value={{o?.id}} *ngFor="let o of organismes">{{o?.libelle}}</option>
+                  <select ngModel name="organisme" id="organismes" class="selectpicker form-control" data-live-search="true">
+                    <option ngModel value={{o?.id}} *ngFor="let o of organismes">{{o?.libelle}}</option>
                   </select>
                 </div>
             </div>

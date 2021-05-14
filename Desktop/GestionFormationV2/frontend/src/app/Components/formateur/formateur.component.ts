@@ -24,7 +24,7 @@ export class FormateurComponent implements OnInit {
 
   public organismeId: any;
   public formateurId: any;
-  public myObject!: Formateur;
+  public myObject!: any;
 
   constructor(private formateurService: FormateurService, 
     private organismeService: OrganismeService,
@@ -86,6 +86,7 @@ export class FormateurComponent implements OnInit {
         console.log("inside addformateur")
         this.organismeService.linkOrganismeToFormateur(this.formateurId, this.organismeId).subscribe(
           (response: any) => {
+            this.organismeService.linkOrganismeToFormateur(this.formateurId, this.organismeId).subscribe();
             console.log(response)
           }, (error: HttpErrorResponse) => {
             console.log(error.message)
@@ -141,17 +142,17 @@ export class FormateurComponent implements OnInit {
       email: formateur.email,
       tel: formateur.tel,
       type: formateur.type,
-      organisme: formateur.organisme,
     }
     this.formateurId = formateur.id
 
-    console.log(formateur.id)
+    console.log(formateur.organisme)
     this.formateurService.updateFormateurEntity(this.myObject, this.formateurId).subscribe(
       async (response: any) => {
         console.log(response)
         if (formateur.organisme) {
           this.organismeService.linkOrganismeToFormateur(this.formateurId, formateur.organisme).subscribe(
             (response: any) => {
+              this.organismeService.linkOrganismeToFormateur(this.formateurId, formateur.organisme).subscribe();
               console.log("inside link org/sess")
               console.log(response)
             }, (error: HttpErrorResponse) => {

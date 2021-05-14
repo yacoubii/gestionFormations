@@ -43,6 +43,11 @@ public class CountryService {
         if(!exists){
             throw new IllegalStateException("Country with id " + countryId + " does not exists");
         }
+        Optional<CountryEntity> country= countryRepository.findById(countryId);
+        country.get().getParticipants().forEach(p->{
+            p.setCountry(null);
+        });
+        country.get().setParticipants(null);
         countryRepository.deleteById(countryId);
     }
 

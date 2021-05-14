@@ -42,6 +42,11 @@ public class ProfileService {
         if(!exists){
             throw new IllegalStateException("Profile with id " + profileId + " does not exists");
         }
+        Optional<ProfileEntity> profile=profileRepository.findById(profileId);
+        profile.get().getParticipants().forEach(p->{
+            p.setProfile(null);
+        });
+        profile.get().setParticipants(null);
         profileRepository.deleteById(profileId);
     }
     @Transactional
