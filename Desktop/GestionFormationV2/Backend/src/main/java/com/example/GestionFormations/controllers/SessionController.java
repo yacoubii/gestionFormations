@@ -61,4 +61,10 @@ public class SessionController {
     ){
         sessionService.updateSession(sessionId, sessionUpdate);
     }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping(path="/clear/{sessionId}")
+    public void clearFormationsForSessions(@PathVariable("sessionId") Long sessionId){
+        sessionService.clearFormationsForSessions(sessionId);
+    }
 }

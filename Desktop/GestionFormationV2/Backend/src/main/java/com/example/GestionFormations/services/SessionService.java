@@ -103,4 +103,11 @@ public class SessionService {
 
         sessionRepository.save(session);
     }
+
+    public void clearFormationsForSessions(Long sessionId){
+        SessionEntity session = sessionRepository.findById(sessionId).orElseThrow(()-> new IllegalStateException(
+                "sessions with id " + sessionId + " does not exist"));
+        session.setFormations(null);
+        sessionRepository.save(session);
+    }
 }

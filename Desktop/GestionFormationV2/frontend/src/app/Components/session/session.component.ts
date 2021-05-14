@@ -33,6 +33,8 @@ export class SessionComponent implements OnInit {
   deleteSession : any
   participantsForSessionId: any;
   participantsForSession: any;
+  formationList: any;
+  formationsDetails: any;
   constructor(private sessionService:SessionService,
               private organismeService:OrganismeService,
               private formationService:FormationService,
@@ -96,7 +98,7 @@ export class SessionComponent implements OnInit {
     document.getElementById('add-session-form')?.click()
     this.formateurId = addForm.value.formateur
     this.organismeId = addForm.value.organisme
-    this.formationId = addForm.value.formation
+    this.formationList = addForm.value.formation
     this.myObject = {
       lieu:addForm.value.lieu,
       dateDeb:addForm.value.dateDeb,
@@ -133,14 +135,17 @@ export class SessionComponent implements OnInit {
           }
         )
         await this.delay(1000)
-        this.formationService.linkToSession(this.sessionId,this.formationId).subscribe(
-          (response:any)=>{
-            console.log("inside link formation/sess")
-            console.log(response)
-          },(error:HttpErrorResponse)=>{
-            console.log((error.message))
-          }
-        )
+        this.formationList.forEach((formationId: any) => {
+          this.formationService.linkToSession(this.sessionId,formationId)
+            .subscribe(async (response: any) => {
+              console.log('session:******');
+              console.log(response);
+              await this.delay(500);
+            },(error:HttpErrorResponse)=>{
+              console.log((error.message))
+            });
+        });
+      
         this.toastr.success("Session ajoutée avec succès!","Félicitations")
         await this.delay(1510);
         this.getSessions()
@@ -190,15 +195,23 @@ export class SessionComponent implements OnInit {
         }
         if(session.formation){
           await this.delay(1000)
-          this.formationService.linkToSession(this.sessionId,session.formation).subscribe(
-            (response:any)=>{
-              console.log("inside link formation/sess")
-              console.log(response)
-            },(error:HttpErrorResponse)=>{
-              console.log((error.message))
-            }
-          )
-        }
+          this.sessionService
+          .clearFormationsForSession(this.sessionId)
+          .subscribe((res:any)=>{
+            console.log(res);
+            console.log("cleared");
+          });
+          }
+          session.formation.forEach((formationId: any) => {
+            this.formationService.linkToSession(this.sessionId, formationId)
+                .subscribe(async (response: any) => {
+                  console.log('session updated*********:');
+                  console.log(response);
+                  await this.delay(500)
+                },(error:HttpErrorResponse)=>{
+                  console.log((error.message))
+                });
+            });
         this.toastr.success("Session modifée avec succès!","Félicitations")
         await this.delay(1510);
       this.getSessions()
@@ -251,6 +264,10 @@ export class SessionComponent implements OnInit {
         }
       )
       button.setAttribute('data-target', '#participantDetailsModal');
+    }
+    if(mode === 'FormationDetails'){
+      this.formationsDetails=session.formations;
+      button.setAttribute('data-target','#FormationDetailsModal'); 
     }
 
     container?.appendChild(button);

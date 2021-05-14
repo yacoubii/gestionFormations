@@ -16,6 +16,7 @@
     <th>Formateur</th>
     <th>Organisme</th>
     <th>Participants</th>
+    <th>Formations</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -29,6 +30,7 @@
         <td>{{session?.formateur?.firstName}}</td>
         <td>{{session?.organisme?.libelle}}</td>
         <td><button (click)="onOpenModal(session?.id, 'details')" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button></td>
+        <td><button (click)="onOpenModal(session, 'FormationDetails')" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></button></td>
         <td>
           <button (click)="onOpenModal(session, 'edit')" class="btn btn-outline-success mr-3" data-bs-toggle="modal" data-bs-target="#editSessionModal"><i class="far fa-edit"></i></button>
           <button (click)="onOpenModal(session,'delete')" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
@@ -76,8 +78,8 @@
                 </select>
               </div>
               <div class="form-group col-md-9">
-                <label for="formation">Formation</label>
-                <select ngModel ngModel id="formation" name="formation" class="form-control selectpicker" data-live-search="true" required>
+                <label for="formation">Formations</label>
+                <select ngModel ngModel multiple id="formation" name="formation" class="form-control selectpicker" data-live-search="true" required>
                   <option *ngFor="let formation of formations"  value={{formation?.id}}>{{formation?.titre}}</option>
                 </select>
               </div>
@@ -139,8 +141,8 @@
                 </select>
               </div>
               <div class="form-group col-md-9">
-                <label for="formation">Formation</label>
-                <select ngModel ngModel id="formation" name="formation" class="form-control selectpicker" data-live-search="true" required>
+                <label for="formation">Formations</label>
+                <select ngModel ngModel multiple id="formation" name="formation" class="form-control selectpicker" data-live-search="true" required>
                   <option *ngFor="let formation of formations"  value={{formation?.id}}>{{formation?.titre}}</option>
                 </select>
               </div>
@@ -205,6 +207,37 @@
                   <p><b> Email:</b> {{p?.email}} | <b> Tel:</b> {{p?.tel}}   </p>
                   <p><b> Profil:</b> {{p?.profile?.libelle}} | <b> Pays:</b> {{p?.country?.name}}   </p>
                   <footer class="blockquote-footer">Type: <cite title="Source Title">{{p?.type}}</cite></footer>
+                </blockquote>
+              </div>
+          </div>
+       </div>
+     </div>
+    </div>
+  </div>
+
+
+
+  <!-- Formations Modal -->
+<div class="modal fade bd-example-modal-lg" id="FormationDetailsModal" tabindex="-1" role="dialog" aria-labelledby="FormationDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="FormationDetailsModalLabel">Les formations de cette session:</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+           </button>
+     </div>
+        <div class="modal-body">
+          <div class="card"  *ngFor = "let f of formationsDetails">
+              <div class="card-header">
+                <b> Formation ID: {{f?.id}} </b>
+              </div>
+              <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                  <p><b> Titre:</b> {{f?.titre}} | <b> Type:</b> {{f?.type}}</p>
+                  <p><b> Durée:</b> {{f?.duree}}  </p>
+                  <p><b> Nombre de sessions:</b> {{f?.nb_session}} | <b> Domaine:</b> {{f?.domain?.libelle}}   </p>
+                  <footer class="blockquote-footer">Budget: <cite title="Source Title">{{f?.budget}} TND</cite></footer>
                 </blockquote>
               </div>
           </div>

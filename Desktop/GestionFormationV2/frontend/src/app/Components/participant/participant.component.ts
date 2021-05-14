@@ -117,9 +117,10 @@ export class ParticipantComponent implements OnInit {
         addForm.value.sessions.forEach((sessionId: any) => {
           this.participantService
             .linkNewSessionToParticipant(sessionId, participantId)
-            .subscribe((response: any) => {
+            .subscribe(async (response: any) => {
               console.log('session:');
               console.log(response);
+              await this.delay(500);
             });
         });
         await this.delay(1000);
@@ -168,10 +169,6 @@ export class ParticipantComponent implements OnInit {
     this.participantService.deleteParticipant(participantId).subscribe(
       async (response: any) => {
         console.log(response);
-        // this.getParticipants();
-        // this.getProfiles();
-        // this.getSessions();
-        // this.getCountries();
         this.toastr.success("Participant supprimé avec succès!","Félicitations")
         await this.delay(1510);
         window.location.reload();
@@ -200,16 +197,19 @@ export class ParticipantComponent implements OnInit {
           if (participantEdit.sessions) {
             this.participantService
               .clearSessionsForParticipant(participantEdit.id)
-              .subscribe();
+              .subscribe(async (response: any) => {
+                await this.delay(500);
+              });
           }
 
           if (participantEdit.sessions) {
             participantEdit.sessions.forEach((sessionId: any) => {
               this.participantService
                 .linkNewSessionToParticipant(sessionId, participantEdit.id)
-                .subscribe((response: any) => {
+                .subscribe(async (response: any) => {
                   console.log('session:');
                   console.log(response);
+                  await this.delay(500);
                 });
             });
           }
